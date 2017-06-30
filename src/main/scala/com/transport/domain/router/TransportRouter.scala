@@ -2,7 +2,7 @@ package com.transport.domain.router
 
 import akka.actor.{Actor, ActorLogging, Props}
 import akka.routing.FromConfig
-import com.transport.domain.Protocol.{TransportRequest, UnknownRequestException}
+import com.transport.domain.protocol.{TransportRequest, UnknownRequestException}
 import com.transport.domain.worker.TransportWorker
 
 class TransportRouter extends Actor with ActorLogging {
