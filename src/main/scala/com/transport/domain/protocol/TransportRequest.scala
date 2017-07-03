@@ -18,7 +18,7 @@ case class TransportRequest(request: RoutingRequest, `type`: RequestType) {
   }
 }
 
-sealed trait RequestType {
+private[protocol] trait RequestType {
   //TODO: Add assert conditions / validate method for request
 
   def execute(request: RoutingRequest)(implicit graphService: GraphService): Any

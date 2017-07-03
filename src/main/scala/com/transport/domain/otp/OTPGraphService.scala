@@ -6,6 +6,8 @@ import com.transport.util.Configuration
 import org.opentripplanner.routing.impl.{GraphScanner, InputStreamGraphSource}
 import org.opentripplanner.routing.services.GraphService
 
+import scala.collection.JavaConverters._
+
 class OTPGraphService extends Configuration {
   private val graphDirPath = config.getString("com.transport.otp.graph.dir")
   private val routerIds = config.getStringList("com.transport.otp.graph.routerIds")
@@ -33,6 +35,16 @@ class OTPGraphService extends Configuration {
     graphScanner.autoRegister = routerIds
     graphScanner.startup()
   }
+
+  def waitTillAllGraphsLoaded(): Unit = {
+    waitTillAllGraphsLoaded(this.routerIds.asScala.toList)
+  }
+
+  private def waitTillAllGraphsLoaded(routers: List[String]): Unit = {
+    if( routers.forall(r => graphService.getRouter(r) != null) ) return
+
+    waitTillAllGraphsLoaded(routers)
+  }
 }
 
 object OTPGraphService {
@@ -40,4 +52,6 @@ object OTPGraphService {
 
   //TODO: Do we need to initialize multiple graph services OR single graph service?
   def apply: GraphService = graphService.graphService
+
+  def get: OTPGraphService = graphService
 }

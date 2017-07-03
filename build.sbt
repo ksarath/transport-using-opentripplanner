@@ -1,6 +1,6 @@
 name            := "transportation-using-opentripplanner"
 
-version         := "1.0"
+version         := "1.0.0-beam-SNAPSHOT"
 
 scalaVersion    := "2.11.11"
 
